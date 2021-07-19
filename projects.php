@@ -78,7 +78,7 @@
 <div class="table-responsive">
         <table class="table">
     <?php
-        $sql = 'SELECT ID, Name, Employees FROM Projects';
+        $sql = 'SELECT * FROM Projects';
         $result = mysqli_query($conn, $sql);
 
         if (mysqli_num_rows($result) > 0) {

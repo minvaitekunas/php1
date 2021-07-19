@@ -69,7 +69,7 @@
 </head>
 <header>
     <div></div>
-        <a href="#" <button>Employees</button></a>
+        <a href="index.php" <button>Employees</button></a>
         <a href="projects.php" <button>Projects</button></a>
     </div>
  </header>
