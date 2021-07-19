@@ -11,7 +11,7 @@
     }
 
     if(isset($_GET['action']) and $_GET['action'] == 'delete'){
-        $sql = 'DELETE FROM Employees WHERE id = ?';
+        $sql = 'DELETE FROM Projects WHERE id = ?';
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('i', $_GET['id']);
         $res = $stmt->execute();
@@ -24,7 +24,7 @@
         
     }
     if(isset($_GET['action']) and $_GET['action'] == 'update'){
-        $sql = 'UPDATE Employees WHERE id = ?';
+        $sql = 'UPDATE Projects WHERE id = ?';
         $id= $_GET['id'];
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('i', $_GET['id']);
@@ -38,8 +38,8 @@
         
     }
     if(isset($_POST['create_empl'])){
-        $stmt = $conn->prepare("INSERT INTO Employees (FirstName, LastName) VALUES (?, ?)");
-        $stmt->bind_param('ss',$name, $surname);
+        $stmt = $conn->prepare("INSERT INTO Projects (Name) VALUES (?)");
+        $stmt->bind_param('s',$name);
         $name = $_POST['fname'];
         $surname = $_POST['lname'];
         $stmt->execute();
@@ -50,7 +50,7 @@
 
 	
 	
-    $sql = "SELECT * FROM Employees";
+    $sql = "SELECT * FROM Projects";
     $result = $conn->query($sql);
 
     
@@ -69,7 +69,7 @@
 </head>
 <header>
     <div></div>
-        <a href="#" <button>Employees</button></a>
+        <a href="index.php" <button>Employees</button></a>
         <a href="projects.php" <button>Projects</button></a>
     </div>
  </header>
@@ -78,21 +78,21 @@
 <div class="table-responsive">
         <table class="table">
     <?php
-        $sql = 'SELECT id, firstname, lastname FROM Employees';
+        $sql = 'SELECT ID, Name, Employees FROM Projects';
         $result = mysqli_query($conn, $sql);
 
         if (mysqli_num_rows($result) > 0) {
             print('<div class="table-responsive');
             print('<table class="table">');
             print('<thead>');
-            print('<tr><th>Id</th><th>Name</th><th>Surname</th><th>Actions</th></tr>');
+            print('<tr><th>Id</th><th>Name</th><th>Employee</th><th>Actions</th></tr>');
             print('</thead>');
             print('<tbody>');
             while($row = mysqli_fetch_assoc($result)) {
                 print('<tr>' 
                     . '<td>' . $row['id'] . '</td>' 
-                    . '<td>' . $row['firstname'] . '</td>' 
-                    . '<td>' . $row['lastname'] . '</td>'
+                    . '<td>' . $row['name'] . '</td>' 
+                    . '<td>' . $row['employees'] . '</td>'
                     . '<td>' . '<a href="?action=delete&id='  . $row['id'] . '"><button>DELETE</button></a>'
                              . '<a href="?action=update&id='  . $row['id'] . '"><button>UPDATE</button></a>' . '</td>'
                     . '</tr>');
@@ -104,15 +104,12 @@
             echo '0 results';
         }
         mysqli_close($conn);
-        
     ?>
          <br>
         <form action="" method="POST">
             <div>
-            <label for="fname">Name:</label><br>
-            <input type="text" id="fname" name="fname" value="John"><br>
-            <label for="lname">Surname:</label><br>
-            <input type="text" id="lname" name="lname" value="Doe"><br>
+            <label for="fname">Project:</label><br>
+            <input type="text" id="fname" name="fname" value="Project title"><br>
             <input type="submit" name="create_empl" value="Submit">
         </form>
         <br>
